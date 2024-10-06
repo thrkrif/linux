@@ -5,7 +5,7 @@
 extern void id();
 extern int factorial(int num);
 
-void main(){
+int main(){
     printf("OSNW2024\t");
     // 함수 호출
     id();
