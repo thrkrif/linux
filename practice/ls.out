@@ -1,0 +1,10 @@
+ls: /abc: No such file or directory
+.:
+input2.txt
+input3.txt
+input4.txt
+ls.err
+ls.out
+prcgrep
+sample.txt
+text.txt
