@@ -19,3 +19,7 @@ f
 12
 13
 2024년 10월 27일 일요일 04시 45분 04초 KST
+hello linux
+hello linux
+set nu
+
