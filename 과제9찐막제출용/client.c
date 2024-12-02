@@ -52,4 +52,4 @@ int main() {
     semctl(sem_trigger_id, 0, IPC_RMID);
 
     return 0;
-} 
+}

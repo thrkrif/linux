@@ -19,8 +19,6 @@ void producer(int client_id) {
         exit(1);
     }
 
-    int min = INT_MAX, max = INT_MIN;
-
     while (1) {
         sem_wait(sem_trigger_id); // Trigger 신호 대기
 
@@ -52,16 +50,6 @@ void producer(int client_id) {
         producer_data->result = result;
         producer_data->min = trigger_data->min;
         producer_data->max = trigger_data->max;
-
-        // // 최소, 최대값 업데이트
-        // if (result < min) min = result;
-        // if (result > max) max = result;
-
-        // // 데이터 복사 및 업데이트
-        // memcpy(producer_data, trigger_data, sizeof(struct calculation_data));
-        // producer_data->result = result;
-        // producer_data->min = min;
-        // producer_data->max = max;
 
         // Producer 주소 설정
         producer_data->producer_addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);

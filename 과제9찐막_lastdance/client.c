@@ -20,7 +20,6 @@ int main() {
 
     trigger_data->exit_flag = 0; // 종료 플래그 초기화
 
-    printf("Server started. Waiting for input...\n");
 
     while (1) {
         printf("Enter input (num1 num2 op name) or '0 0 $ quit' to exit: ");
@@ -32,7 +31,6 @@ int main() {
         }
 
         if (trigger_data->left_num == 0 && trigger_data->right_num == 0 && trigger_data->op == '$') {
-            printf("Exiting Server...\n");
             trigger_data->exit_flag = 1;
             sem_signal(sem_trigger_id); // 종료 신호 전송
             break;
@@ -52,4 +50,4 @@ int main() {
     semctl(sem_trigger_id, 0, IPC_RMID);
 
     return 0;
-} 
+}
