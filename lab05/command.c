@@ -10,3 +10,8 @@ int main(int argc, char **argv)
 	printf("-- END - NOT EXECUTE --\n");
 	return 1;
 }
+
+/*
+printf("./exec_test", "exec_test", NULL);
+
+*/

@@ -28,6 +28,7 @@ struct calculation_data {
     int valid_input; // 유효한 입력인지 확인하는 플래그
 };
 
+
 #define SHM_KEY_TRIGGER 0x1234
 #define SHM_KEY_PRODUCER 0x5678
 #define SEM_KEY_TRIGGER_PRODUCER 0x9ABC
