@@ -24,17 +24,6 @@ struct ServerResponse {
     struct sockaddr_in client_addr;
 };
 
-void print_response(struct ServerResponse *response) {
-    char time_buffer[BUFFER_SIZE];
-    strftime(time_buffer, sizeof(time_buffer), "%a %b %d %H:%M:%S %Y", &response->timestamp);
-
-    printf("Result: %d\n", response->result);
-    printf("Min: %d\n", response->min);
-    printf("Max: %d\n", response->max);
-    printf("Time: %s\n", time_buffer);
-    printf("From: %s\n", inet_ntoa(response->client_addr.sin_addr));
-}
-
 int main() {
     int sock;
     struct sockaddr_in server_addr;
@@ -86,8 +75,21 @@ int main() {
             break;
         }
 
-        // 결과 출력
-        print_response(&response);
+         // 결과 출력 (ClientData와 ServerResponse를 함께 사용)
+        char time_buffer[BUFFER_SIZE];
+        strftime(time_buffer, sizeof(time_buffer), "%a %b %d %H:%M:%S %Y", &response.timestamp);
+
+        printf("%d%c%d=%d %s min=%d max=%d %s from %s\n",
+            data.num1,                       
+            data.operator,                   
+            data.num2,                       
+            response.result,                 
+            data.message,                    
+            response.min,                    
+            response.max,                    
+            time_buffer,                     
+            inet_ntoa(response.client_addr.sin_addr)); // 서버에서 반환된 클라이언트 IP
+    
     }
 
     close(sock);

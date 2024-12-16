@@ -7,7 +7,7 @@
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <time.h>
-#include <cerrono>
+#include <errno.h>
 
 #define PORT 12345
 #define MAX_CLIENTS 3
@@ -28,13 +28,14 @@ struct ServerResponse {
     struct sockaddr_in client_addr;
 };
 
-void handle_client(int client_sock, struct sockaddr_in *client_addr, int *min, int *max) {
+void handle_client(int client_sock, struct sockaddr_in *client_addr, int *min, int *max, int *client_sockets, int index) {
     struct ClientData data;
     struct ServerResponse response;
     
     if (recv(client_sock, &data, sizeof(data), 0) <= 0) {
         perror("recv");
         close(client_sock);
+        client_sockets[index] = 0; // 배열에서 소켓 제거
         return;
     }
 
@@ -63,8 +64,9 @@ void handle_client(int client_sock, struct sockaddr_in *client_addr, int *min, i
         perror("send");
     }
 
-    if (data.num1 == 0 && data.num2 == 0 && data.operator == '$') {
+    if (data.num1 == 0 && data.num2 == 0 && data.operator == '$' && strcmp(data.message, "quit") == 0) {
         printf("Client disconnected.\n");
+        client_sockets[index] = 0; // 배열에서 소켓 제거
         close(client_sock);
     }
 }
@@ -139,10 +141,9 @@ int main() {
 
         for (int i = 0; i < MAX_CLIENTS; i++) {
             if (FD_ISSET(client_sockets[i], &readfds)) {
-                handle_client(client_sockets[i], &client_addr, &min, &max);
+                handle_client(client_sockets[i], &client_addr, &min, &max, client_sockets, i);
             }
         }
     }
-
     return 0;
 }
